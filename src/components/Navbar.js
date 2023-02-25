@@ -8,15 +8,12 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <section class="navbar">
-        <nav class="navbar">NAVBAR</nav>
+      <navbar class="navbar">
 
-        <div class="navbar_elements">
         <Logo />
         <Search />
-        </div>
 
-      </section >
+      </navbar >
     )
   }
 }

@@ -11,8 +11,12 @@ class App extends React.Component {
     return (
       <div>
         <Navbar />
-        <Feed />
-        <Sidebar />
+
+        <div class="container">
+          <Feed />
+          <Sidebar />
+        </div>
+        
       </div>
     )
   }
