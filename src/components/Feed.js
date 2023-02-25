@@ -13,6 +13,8 @@ class Feed extends React.Component {
 
         <div className="feed__posts">
           <Post />
+          <Post />
+          <Post />
         </div>
 
       </section>

@@ -6,3 +6,22 @@
   
   background-color: rgb(60, 0, 255);
 }
+
+.subreddit-icon {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+button {
+  background-color: aqua;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+
+  margin-bottom: 10px;
+
+}
