@@ -7,7 +7,7 @@ class Logo extends React.Component {
 
   render() {
     return (
-      <div class="logo">
+      <div className="logo">
         <h1>LOGO</h1>
 
       </div>

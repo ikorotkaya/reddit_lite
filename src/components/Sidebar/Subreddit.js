@@ -6,7 +6,7 @@ class Subreddit extends React.Component {
 
   render() {
     return (
-      <div class="subreddit">SUBREDDIT</div>
+      <div className="subreddit">SUBREDDIT</div>
     )
   }
 }

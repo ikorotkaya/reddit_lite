@@ -12,7 +12,7 @@ class App extends React.Component {
       <div>
         <Navbar />
 
-        <div class="container">
+        <div className="container">
           <Feed />
           <Sidebar />
         </div>

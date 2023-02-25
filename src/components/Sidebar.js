@@ -7,10 +7,10 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <section class="sidebar">
+      <section className="sidebar">
         <h1>SIDEBAR</h1>
 
-        <div class="sidebar__subreddit">
+        <div className="sidebar__subreddit">
           <Subreddit />
           <Subreddit />
           <Subreddit />

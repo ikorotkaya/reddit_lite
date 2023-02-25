@@ -1,0 +1,9 @@
+.rating {
+  padding: 10px;
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  
+  background-color: rgb(255, 145, 0);
+}
