@@ -7,6 +7,19 @@ import Sidebar from './components/Sidebar';
 
 class App extends React.Component {
 
+  async componentDidMount() {
+    const url = `https://www.reddit.com/r/popular.json`;
+
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    const response = await fetch(url, requestOptions);
+    const jsondata = await response.json();
+    console.log(jsondata)
+  }
+
   render() {
     return (
       <div className='container'>
@@ -16,7 +29,7 @@ class App extends React.Component {
           <Feed />
           <Sidebar />
         </div>
-        
+
       </div>
     )
   }
