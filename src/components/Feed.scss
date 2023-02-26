@@ -1,10 +1,9 @@
 .feed {
-  padding: 24px;
   display: flex;
   flex-direction: column;
   grid-column: span 1;
   
-  background-color: white;
+  // background-color: rgba(218, 52, 52, 0.777);
   
   &__posts {
     display: flex;

@@ -1,0 +1,10 @@
+.post-content {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 10px;
+
+  &__title {
+    margin-top: 0;
+  }
+}

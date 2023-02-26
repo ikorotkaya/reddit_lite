@@ -8,12 +8,12 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <navbar className="container__navbar">
+      <div className="container__navbar">
 
         <Logo />
         <Search />
 
-      </navbar >
+      </div >
     )
   }
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import './Post.css';
+import './Post.scss';
 import Rating from './Rating';
 import PostContent from './PostContent';
-import Comments from './Comments';
+import PostDetails from './PostDetails';
 
 class Post extends React.Component {
 
@@ -17,7 +17,7 @@ class Post extends React.Component {
 
         <div className="post__container">
           <PostContent />
-          <Comments />
+          <PostDetails />
         </div>
       </div>
     )
