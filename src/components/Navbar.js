@@ -8,7 +8,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <navbar className="navbar">
+      <navbar className="container__navbar">
 
         <Logo />
         <Search />

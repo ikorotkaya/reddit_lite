@@ -1,9 +1,10 @@
-.navbar {
+.container__navbar {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  padding: 10px;
   margin: 0 auto 20px;
+  padding: 0 40px;
 
-  /* background-color: red; */
+  border-bottom: 1.5px solid rgb(203, 229, 230);
 }
