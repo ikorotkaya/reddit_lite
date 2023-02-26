@@ -12,7 +12,6 @@ html {
 
   &__feed-sidebar {
     display: grid;
-    width: 1000px;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
   }
@@ -20,8 +19,14 @@ html {
 
 
 @media screen and (max-width: 767px) {
-  .container {
+  .container__feed-sidebar {
     grid-template-columns: 1fr;
     padding: 10px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  .container__feed-sidebar {
+    width: 1000px;
   }
 }
