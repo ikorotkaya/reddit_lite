@@ -1,0 +1,18 @@
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  // background-color: rgb(255, 0, 230);
+  
+  &__icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+  }
+}
+
+span {
+  font-style: italic;
+  color: rgb(186, 224, 225);
+}

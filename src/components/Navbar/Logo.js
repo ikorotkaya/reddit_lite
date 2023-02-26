@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Logo.css';
+import './Logo.scss';
 
 class Logo extends React.Component {
 
@@ -8,7 +8,8 @@ class Logo extends React.Component {
   render() {
     return (
       <div className="logo">
-        <h1>LOGO</h1>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvp_7wmMJzFr_atRtvsRTHiTweuMarz4S3aw&usqp=CAU" alt="reddit-icon" className="logo__icon"></img>
+        <h3 className='logo__name'>Reddit<span>Lite</span></h3>
 
       </div>
     )

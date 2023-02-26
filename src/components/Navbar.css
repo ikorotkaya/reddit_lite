@@ -1,12 +1,9 @@
 .navbar {
-  padding: 24px;
-  margin: 0 auto;
-
-  background-color: red;
-
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-content: center;
-  
-  margin-bottom: 20px;
+  align-items: center;
+  padding: 10px;
+  margin: 0 auto 20px;
+
+  /* background-color: red; */
 }

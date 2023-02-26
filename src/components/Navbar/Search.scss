@@ -1,0 +1,29 @@
+.form {
+  display: flex;
+
+  // background-color: rgb(115, 0, 255);
+
+  &__search-term {
+    width: 100%;
+    padding: 6px 10px;
+    margin-right: 10px;
+
+    border: none;
+    border-radius: 15px;
+
+    background-color: rgb(203, 229, 230);
+
+    color: black;
+  }
+
+  &__search-button {
+    all: unset;
+    display: flex;
+    align-items: center;
+
+    font-size: 24px;
+    color: rgb(110, 164, 164);
+
+    cursor: pointer;
+  }
+}
