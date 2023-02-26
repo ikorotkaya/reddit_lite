@@ -3,9 +3,12 @@ html {
 }
 
 .container {
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background-color: rgb(246, 246, 246);
 
   &__feed-sidebar {
     display: grid;

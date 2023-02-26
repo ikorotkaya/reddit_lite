@@ -3,8 +3,6 @@
   margin-bottom: 20px;
 
   border-radius: 5px;
-  
-  background-color: rgb(60, 0, 255);
 }
 
 .subreddit-icon {
@@ -18,12 +16,12 @@
 .subreddit-button {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   width: 100%;
 
   border: none;
 
-  background-color: aqua;
+  background-color: rgb(255, 255, 255);
   
   font-weight: 600;
   

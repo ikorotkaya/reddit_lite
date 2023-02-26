@@ -9,8 +9,6 @@ class Feed extends React.Component {
   render() {
     return (
       <section className="feed">
-        <h1>FEED</h1>
-
         <div className="feed__posts">
           <Post />
           <Post />
