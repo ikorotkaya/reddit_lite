@@ -12,12 +12,12 @@ class Post extends React.Component {
     return (
       <div className="post">
         <div className="post__rating">
-          <Rating />
+          <Rating score={this.props.score} />
         </div>
 
         <div className="post__container">
-          <PostContent />
-          <PostDetails />
+          <PostContent title={this.props.title} image={this.props.image}/>
+          <PostDetails author={this.props.author} comments={this.props.comments}/>
         </div>
       </div>
     )

@@ -7,7 +7,7 @@ import Sidebar from './components/Sidebar';
 
 export default function App() {
 
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState({});
   const [subreddits, setSubreddits] = useState({});
 
   useEffect(() => {
@@ -37,8 +37,16 @@ export default function App() {
         popularSubreddits[post.data.subreddit] = null
       });
 
-      console.log('Set subreddits')
       setSubreddits(popularSubreddits)
+
+      const feedPosts = {};
+      jsondata.data.children.forEach(post => {
+        feedPosts[post.data.id] = post.data
+      });
+
+      console.log(feedPosts)
+      setPosts(feedPosts)
+
     })
 
 
@@ -49,7 +57,7 @@ export default function App() {
       <Navbar />
 
       <div className="container__feed-sidebar">
-        <Feed />
+        <Feed posts={posts}/>
         <Sidebar subreddits={subreddits} />
       </div>
 
