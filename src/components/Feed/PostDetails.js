@@ -9,9 +9,9 @@ class PostDetails extends React.Component {
   render() {
     return (
       <div className="post-details">
-        <div className='post-details__username'>{this.props.author}</div>
+        <div className='post-details__username'>{this.props.postData.author}</div>
         <div className='post-details__time'>Time</div>
-        <PostDetailsComments comments={this.props.comments}/>
+        <PostDetailsComments comments={this.props.postData.num_comments}/>
       </div>
     )
   }
