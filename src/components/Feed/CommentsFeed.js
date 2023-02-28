@@ -8,7 +8,7 @@ class CommentsFeed extends React.Component {
 
   render() {
     return (
-      <div className='comments_container'>
+      <div className='comments-feed_container'>
         <Comment />
         <Comment />
         <Comment />

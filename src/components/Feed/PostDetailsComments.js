@@ -5,12 +5,12 @@ import CommentsButton from './CommentsButton'
 
 export default function PostDetailsComments(props) {
 
-  const {commentsNumber} = props;
+  const {postData, toggleComments} = props;
 
   return (
     <div className='comments_container'>
-      <CommentsButton />
-      <p className='comments_container__amount'>{commentsNumber}</p>
+      <CommentsButton toggleComments={toggleComments}/>
+      <p className='comments_container__amount'>{postData.num_comments}</p>
     </div>
   )
 }
