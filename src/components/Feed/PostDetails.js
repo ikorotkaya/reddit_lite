@@ -56,7 +56,7 @@ class PostDetails extends React.Component {
       <div className="post-details">
         <div className='post-details__username'>{this.props.postData.author}</div>
         <div className='post-details__time'>{timestamp}</div>
-        <PostDetailsComments comments={this.props.postData.num_comments} />
+        <PostDetailsComments commentsNumber={this.props.postData.num_comments} />
       </div>
     )
   }
