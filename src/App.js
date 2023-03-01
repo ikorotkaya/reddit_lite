@@ -44,7 +44,7 @@ export default function App() {
         feedPosts[post.data.id] = post.data
       });
 
-      console.log(feedPosts)
+      // console.log(feedPosts)
       setPosts(feedPosts)
 
     })

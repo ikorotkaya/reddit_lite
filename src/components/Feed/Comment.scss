@@ -1,0 +1,30 @@
+.comment_container {
+  margin-bottom: 10px;
+  padding: 10px;
+  
+  border-radius: 10px;
+  background-color: rgb(247, 247, 247);
+  
+  &__timestamp {
+    all: unset;
+    text-align: left;
+    font-size: 10px;
+    font-style: italic;
+    
+  }
+
+  &__username {
+    all: unset;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  &__name-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+}

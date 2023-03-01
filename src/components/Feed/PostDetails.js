@@ -5,13 +5,44 @@ import PostDetailsComments from './PostDetailsComments'
 import CommentsFeed from './CommentsFeed'
 
 export default function PostDetails(props) {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState({});
   const [commentsVisible, setCommentsVisible] = useState(false)
+
+  const { postData } = props;
+  const createdData = props.postData.created;
+  const permalinkData = props.postData.permalink;
+
+  // console.log(permalinkData)
 
   const toggleComments = () => {
     setCommentsVisible(!commentsVisible)
 
-    
+    const fetchData = async () => {
+      const url = `http://www.reddit.com${permalinkData}.json`;
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      const response = await fetch(url, requestOptions);
+      const jsondata = await response.json();
+      return jsondata
+    }
+
+    fetchData().then((jsondata) => {
+      const second = jsondata[1]
+
+      const postComments = {};
+
+      second.data.children.forEach((comment) => {
+        postComments[comment.data.body] = comment.data
+
+      })
+      // console.log(postComments)
+      setComments(postComments)
+
+    }, [])
 
     // if (commentsVisible) {
     //   setCommentsVisible(false)
@@ -20,8 +51,7 @@ export default function PostDetails(props) {
     // }
   }
 
-  const { postData } = props;
-  const createdData = props.postData.created;
+
 
   // to show the exact time of the post
   // const d = new Date();
@@ -71,11 +101,12 @@ export default function PostDetails(props) {
       <div className='post-details__details'>
         <div className='post-details__username'>{postData.author}</div>
         <div className='post-details__time'>{timestamp}</div>
-        <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments}/>
+        <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed />
+        <CommentsFeed comments={comments} />
       </div>}
     </div>
   )
 }
+
