@@ -10,17 +10,17 @@
   &:not(:last-child) {
     margin-bottom: 20px;
   }
-}
-
-.post__rating {
-  flex-direction: column;
-  align-items: center;
-  padding: 0;
-}
-
-.post__container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
+  
+  &__rating {
+    flex-direction: column;
+    font-size: 14px;
+    align-items: center;
+    padding: 5px 0;
+  }
+  
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }  
 }
