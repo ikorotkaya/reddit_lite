@@ -4,7 +4,7 @@ import './PostContent.scss';
 
 class PostContent extends React.Component {
 
-
+  // TODO: split into 4 components for VideoPost, CommentPost, ImagePost and ImageGalleryPost
   render() {
     return (
       <div className="post-content">

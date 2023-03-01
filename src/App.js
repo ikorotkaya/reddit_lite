@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, componentDidMount } from 'react';
 
 import './App.scss';
 import Navbar from './components/Navbar';
@@ -10,9 +10,10 @@ export default function App() {
   const [posts, setPosts] = useState({});
   const [subreddits, setSubreddits] = useState({});
 
+  let i = 0;
   useEffect(() => {
-
-    const fetchData = async () => {
+    console.log(i++);
+    const fetchPopularPosts = async () => {
       const url = `http://www.reddit.com/r/popular.json`;
 
       let requestOptions = {
@@ -22,10 +23,13 @@ export default function App() {
 
       const response = await fetch(url, requestOptions);
       const jsondata = await response.json();
-      return jsondata
+      
+      return jsondata;
     }
 
-    fetchData().then((jsondata) => {
+    console.log(fetchPopularPosts());
+
+    fetchPopularPosts().then((jsondata) => {
       // const popularSubreddits = jsondata.data.children.reduce((accumulator, post) => {
       //   accumulator[post.data.subreddit] = null;
 
@@ -51,6 +55,7 @@ export default function App() {
 
       })
 
+      // TODO: refactor into a single Promise.all
       Promise.all(promises).then((responses) => {
         Promise.all(responses.map(response => response.json())).then(rawSubreddits => {
           const popularSubreddits = {};
@@ -77,7 +82,9 @@ export default function App() {
       });
       setPosts(feedPosts)
     })
-  }, [])
+  }, []);
+  // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
+  // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
   return (
     <div className='container'>

@@ -17,7 +17,7 @@ export default function PostDetails(props) {
   const toggleComments = () => {
     setCommentsVisible(!commentsVisible)
 
-    const fetchData = async () => {
+    const fetchComments = async () => {
       const url = `http://www.reddit.com${permalinkData}.json`;
 
       let requestOptions = {
@@ -30,7 +30,7 @@ export default function PostDetails(props) {
       return jsondata
     }
 
-    fetchData().then((jsondata) => {
+    fetchComments().then((jsondata) => {
       const second = jsondata[1]
 
       const postComments = {};
