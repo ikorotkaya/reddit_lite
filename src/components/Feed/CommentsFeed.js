@@ -17,6 +17,7 @@ class CommentsFeed extends React.Component {
     return (
       <div className='comments-feed_container'>
         {comments}
+        <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load more</button>
       </div>
     )
   }

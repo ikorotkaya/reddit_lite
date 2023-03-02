@@ -44,6 +44,7 @@ export default function PostDetails(props) {
 
     }, [])
 
+
     // if (commentsVisible) {
     //   setCommentsVisible(false)
     // } else {
@@ -51,6 +52,10 @@ export default function PostDetails(props) {
     // }
   }
 
+  const loadMoreComments = () => {
+    alert('Load more comments')
+
+  }
 
 
   // to show the exact time of the post
@@ -104,7 +109,7 @@ export default function PostDetails(props) {
         <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed comments={comments} />
+        <CommentsFeed comments={comments} loadMoreComments={loadMoreComments}/>
       </div>}
     </div>
   )
