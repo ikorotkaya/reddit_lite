@@ -6,7 +6,8 @@ import CommentsFeed from './CommentsFeed'
 
 export default function PostDetails(props) {
   const [comments, setComments] = useState({});
-  const [commentsVisible, setCommentsVisible] = useState(false)
+  const [commentsVisible, setCommentsVisible] = useState(false);
+  const [moreCommentIds, setMoreCommentIds] = useState([])
 
   const { postData } = props;
   const createdData = props.postData.created;
@@ -31,17 +32,18 @@ export default function PostDetails(props) {
     }
 
     fetchComments().then((jsondata) => {
-      const second = jsondata[1]
+      const rawCommentsData = jsondata[1]
 
-      const postComments = {};
+      const postComments = {}
 
-      second.data.children.forEach((comment) => {
+      rawCommentsData.data.children.filter(item => item.kind !== 'more').forEach((comment) => {
         postComments[comment.data.body] = comment.data
-
       })
       // console.log(postComments)
       setComments(postComments)
-
+      const moreComments = rawCommentsData.data.children.find(item => item.kind === 'more');
+      const commentIds = moreComments.data.children;
+      setMoreCommentIds(commentIds)
     }, [])
 
 
