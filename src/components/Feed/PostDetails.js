@@ -55,7 +55,7 @@ export default function PostDetails(props) {
   }
 
   const loadMoreComments = () => {
-    alert('Load more comments')
+    console.log(moreCommentIds.splice(0, 10))
 
   }
 
@@ -111,7 +111,7 @@ export default function PostDetails(props) {
         <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed comments={comments} loadMoreComments={loadMoreComments}/>
+        <CommentsFeed comments={comments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments}/>
       </div>}
     </div>
   )
