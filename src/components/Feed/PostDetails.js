@@ -54,8 +54,16 @@ export default function PostDetails(props) {
   }
 
   const loadMoreComments = () => {
-    moreCommentIds.splice(0, 10)
-    console.log(moreCommentIds.length)
+    const tenMoreIds = moreCommentIds.splice(0, 10)
+
+    const newCommentsPromises = tenMoreIds.map(id => {
+      const url = `http://www.reddit.com${permalinkData}${id}.json`;
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+      return fetch(url, requestOptions)
+    })
 
     setMoreCommentIds([...moreCommentIds])
   }
@@ -112,7 +120,7 @@ export default function PostDetails(props) {
         <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed comments={comments} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments}/>
+        <CommentsFeed comments={comments} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments} />
       </div>}
     </div>
   )
