@@ -14,12 +14,12 @@ class CommentsFeed extends React.Component {
       return <Comment commentData={commentData} key={commentBody} />
     });
 
-    const numberOfComments = this.props.moreCommentIds.length
+
 
     return (
       <div className='comments-feed_container'>
         {comments}
-        <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {numberOfComments} more</button>
+        <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button>
       </div>
     )
   }

@@ -13,7 +13,6 @@ export default function PostDetails(props) {
   const createdData = props.postData.created;
   const permalinkData = props.postData.permalink;
 
-  // console.log(permalinkData)
 
   const toggleComments = () => {
     setCommentsVisible(!commentsVisible)
@@ -55,8 +54,10 @@ export default function PostDetails(props) {
   }
 
   const loadMoreComments = () => {
-    console.log(moreCommentIds.splice(0, 10))
+    moreCommentIds.splice(0, 10)
+    console.log(moreCommentIds.length)
 
+    setMoreCommentIds([...moreCommentIds])
   }
 
 
@@ -111,7 +112,7 @@ export default function PostDetails(props) {
         <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed comments={comments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments}/>
+        <CommentsFeed comments={comments} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments}/>
       </div>}
     </div>
   )
