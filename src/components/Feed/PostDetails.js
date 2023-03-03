@@ -65,6 +65,21 @@ export default function PostDetails(props) {
       return fetch(url, requestOptions)
     })
 
+    Promise.all(newCommentsPromises).then((responses) => {
+      Promise.all(responses.map(response => response.json())).then(rawComments => {
+        const postNewComments = {};
+
+        rawComments.map(rawCommentData => {
+          const newComment = rawCommentData[1];
+          newComment.data.children.forEach((comment) => {
+            postNewComments[comment.data.body] = comment.data
+          })
+        })
+
+        setComments({ ...comments, ...postNewComments })
+      })
+    })
+
     setMoreCommentIds([...moreCommentIds])
   }
 
