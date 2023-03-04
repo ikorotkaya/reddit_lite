@@ -40,7 +40,7 @@ export default function PostDetails(props) {
       })
       // console.log(postComments)
       setComments(postComments)
-      
+
       const moreComments = rawCommentsData.data.children.find(item => item.kind === 'more');
       const commentIds = moreComments.data.children;
       setMoreCommentIds(commentIds)
@@ -54,31 +54,39 @@ export default function PostDetails(props) {
     // }
   }
 
+
   const loadMoreComments = () => {
     const tenMoreIds = moreCommentIds.splice(0, 10)
 
-    const newCommentsPromises = tenMoreIds.map(id => {
+    const fetchComment = async (id) => {
       const url = `https://www.reddit.com${permalinkData}${id}.json`;
+
       let requestOptions = {
         method: 'GET',
         redirect: 'follow',
       };
-      return fetch(url, requestOptions)
+
+      const response = await fetch(url, requestOptions);
+      const jsondata = await response.json();
+
+      return jsondata;
+    }
+
+    const newCommentsPromises = tenMoreIds.map(id => {
+      return fetchComment(id)
     })
 
-    Promise.all(newCommentsPromises).then((responses) => {
-      Promise.all(responses.map(response => response.json())).then(rawComments => {
-        const postNewComments = {};
+    Promise.all(newCommentsPromises).then(rawComments => {
+      const postNewComments = {};
 
-        rawComments.map(rawCommentData => {
-          const newComment = rawCommentData[1];
-          newComment.data.children.forEach((comment) => {
-            postNewComments[comment.data.body] = comment.data
-          })
+      rawComments.map(rawCommentData => {
+        const newComment = rawCommentData[1];
+        newComment.data.children.forEach((comment) => {
+          postNewComments[comment.data.body] = comment.data
         })
-
-        setComments({ ...comments, ...postNewComments })
       })
+
+      setComments({ ...comments, ...postNewComments })
     })
 
     setMoreCommentIds([...moreCommentIds])
