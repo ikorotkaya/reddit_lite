@@ -18,7 +18,7 @@ export default function PostDetails(props) {
     setCommentsVisible(!commentsVisible)
 
     const fetchComments = async () => {
-      const url = `http://www.reddit.com${permalinkData}.json`;
+      const url = `https://www.reddit.com${permalinkData}.json`;
 
       let requestOptions = {
         method: 'GET',
@@ -58,7 +58,7 @@ export default function PostDetails(props) {
     const tenMoreIds = moreCommentIds.splice(0, 10)
 
     const newCommentsPromises = tenMoreIds.map(id => {
-      const url = `http://www.reddit.com${permalinkData}${id}.json`;
+      const url = `https://www.reddit.com${permalinkData}${id}.json`;
       let requestOptions = {
         method: 'GET',
         redirect: 'follow',

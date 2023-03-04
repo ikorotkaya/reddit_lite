@@ -3,7 +3,6 @@ import React from 'react';
 import './PostContent.scss';
 
 export default function PostContent(props) {
-  // TODO: split into 4 components for VideoPost, CommentPost, ImagePost and ImageGalleryPost
   const { postData } = props;
 
   function chooseMediaType(postData) {

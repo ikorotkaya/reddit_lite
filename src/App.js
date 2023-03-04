@@ -14,7 +14,21 @@ export default function App() {
   useEffect(() => {
     console.log(i++);
     const fetchPopularPosts = async () => {
-      const url = `http://www.reddit.com/r/popular.json`;
+      const url = `https://www.reddit.com/r/popular.json`;
+
+      let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      const response = await fetch(url, requestOptions);
+      const jsondata = await response.json();
+      
+      return jsondata;
+    }
+
+    const fetchSubreddit = async (name) => {
+      const url = `https://www.reddit.com/r/${name}/about.json`;
 
       let requestOptions = {
         method: 'GET',
@@ -45,44 +59,30 @@ export default function App() {
       // console.log(subredditNames)
 
       const promises = subredditNames.map(name => {
-        let requestOptions = {
-          method: 'GET',
-          redirect: 'follow',
-        };
-        const url = `http://www.reddit.com/r/${name}/about.json`;
+        return fetchSubreddit(name);
+      })      
+      
+      Promise.all(promises).then((rawSubreddits) => {
+        const popularSubreddits = {};
 
-        return fetch(url, requestOptions)
-
-      })
-
-      // TODO: refactor into a single Promise.all
-      Promise.all(promises).then((responses) => {
-        Promise.all(responses.map(response => response.json())).then(rawSubreddits => {
-          const popularSubreddits = {};
-          rawSubreddits.forEach(rawSubreddit => {
-            let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
-            const removeUrlParams = (url) => {
-              if(!url) {
-                return url;
-              }
-            
-              if(typeof(url) !== "string") {
-                throw new Error("Input should be a string.");
-              }
-            
-              // const urlObj = new URL(url);
-            
-              // urlObj.search = '';
-              // urlObj.hash = '';
-            
-              // return urlObj.toString();
-              return url.split("?")[0];
+        rawSubreddits.forEach(rawSubreddit => {
+          let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
+          const removeUrlParams = (url) => {
+            if(!url) {
+              return url;
             }
-            let imageUrl = removeUrlParams(urlData)
-            popularSubreddits[rawSubreddit.data.display_name] = imageUrl
-          })
-          setSubreddits(popularSubreddits)
+          
+            if(typeof(url) !== "string") {
+              throw new Error("Input should be a string.");
+            }
+          
+            return url.split("?")[0];
+          }
+          let imageUrl = removeUrlParams(urlData)
+          popularSubreddits[rawSubreddit.data.display_name] = imageUrl
         })
+        
+        setSubreddits(popularSubreddits)
       });
 
       const feedPosts = {};
