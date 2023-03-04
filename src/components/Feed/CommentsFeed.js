@@ -5,7 +5,6 @@ import Comment from './Comment';
 
 class CommentsFeed extends React.Component {
 
-  // TODO: create "Load more" button and paginate comments
   render() {
     const comments = Object.keys(this.props.comments).map((commentBody) => {
       const commentData = this.props.comments[commentBody]
