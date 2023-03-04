@@ -62,12 +62,21 @@ export default function App() {
           rawSubreddits.forEach(rawSubreddit => {
             let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
             const removeUrlParams = (url) => {
-              const urlObj = new URL(url);
-
-              urlObj.search = '';
-              urlObj.hash = '';
-
-              return urlObj.toString();
+              if(!url) {
+                return url;
+              }
+            
+              if(typeof(url) !== "string") {
+                throw new Error("Input should be a string.");
+              }
+            
+              // const urlObj = new URL(url);
+            
+              // urlObj.search = '';
+              // urlObj.hash = '';
+            
+              // return urlObj.toString();
+              return url.split("?")[0];
             }
             let imageUrl = removeUrlParams(urlData)
             popularSubreddits[rawSubreddit.data.display_name] = imageUrl
@@ -81,7 +90,7 @@ export default function App() {
         feedPosts[post.data.id] = post.data
       });
       setPosts(feedPosts)
-    })
+    }, [])
   }, []);
   // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
   // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
