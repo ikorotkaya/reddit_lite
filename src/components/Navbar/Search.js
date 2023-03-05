@@ -9,7 +9,8 @@ export default function Search(props) {
 
   function handleButtonClick(e) {
     e.preventDefault()
-    updateSearchTerm(searchTerm)
+    updateSearchTerm(searchTerm);
+    
   }
 
   const handleInput = (e) => {

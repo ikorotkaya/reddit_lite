@@ -94,7 +94,6 @@ export default function App() {
   }, []);
 
   function updateSearchTerm(text) {
-    alert(text)
     setSearchTerm(text)
   }
   // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
@@ -105,7 +104,7 @@ export default function App() {
       <Navbar updateSearchTerm={updateSearchTerm}/>
 
       <div className="container__feed-sidebar">
-        <Feed posts={posts} />
+        <Feed posts={posts} searchTerm={searchTerm} />
         <Sidebar subreddits={subreddits} />
       </div>
 
