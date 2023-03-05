@@ -11,7 +11,7 @@ class Navbar extends React.Component {
       <div className="container__navbar">
 
         <Logo />
-        <Search />
+        <Search updateSearchTerm={this.props.updateSearchTerm}/>
 
       </div >
     )
