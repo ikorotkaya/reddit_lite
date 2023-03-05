@@ -12,20 +12,31 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [subredditName, setSubredditName] = useState('popular')
 
+  const fetchPosts = async (subredditName) => {
+    const url = `https://www.reddit.com/r/${subredditName}.json`;
+
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    const response = await fetch(url, requestOptions);
+    const jsondata = await response.json();
+
+    return jsondata;
+  }
+
+  const loadPosts = (subredditName) => {
+    fetchPosts(subredditName).then((jsondata) => {
+      const feedPosts = {};
+      jsondata.data.children.forEach(post => {
+        feedPosts[post.data.id] = post.data
+      });
+      setPosts(feedPosts)
+    })
+  }
+
   useEffect(() => {
-    const fetchPopularPosts = async () => {
-      const url = `https://www.reddit.com/r/popular.json`;
-
-      let requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-      };
-
-      const response = await fetch(url, requestOptions);
-      const jsondata = await response.json();
-
-      return jsondata;
-    }
 
     const fetchSubreddit = async (name) => {
       const url = `https://www.reddit.com/r/${name}/about.json`;
@@ -41,7 +52,7 @@ export default function App() {
       return jsondata;
     }
 
-    fetchPopularPosts().then((jsondata) => {
+    fetchPosts(subredditName).then((jsondata) => {
       // const popularSubreddits = jsondata.data.children.reduce((accumulator, post) => {
       //   accumulator[post.data.subreddit] = null;
 
@@ -91,6 +102,10 @@ export default function App() {
     }, [])
 
   }, []);
+  
+  useEffect(() => {
+    loadPosts(subredditName)
+  }, [subredditName])
 
   function updateSearchTerm(text) {
     setSearchTerm(text)
@@ -105,7 +120,7 @@ export default function App() {
 
   return (
     <div className='container'>
-      <Navbar updateSearchTerm={updateSearchTerm}/>
+      <Navbar updateSearchTerm={updateSearchTerm} />
 
       <div className="container__feed-sidebar">
         <Feed posts={posts} searchTerm={searchTerm} />
