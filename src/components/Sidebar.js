@@ -5,9 +5,10 @@ import Subreddit from './Sidebar/Subreddit';
 
 class Sidebar extends React.Component {
   render() {
+
     const subreddits = Object.keys(this.props.subreddits).map((subredditName) => {
       const subredditIcon = this.props.subreddits[subredditName]
-      return <Subreddit icon={subredditIcon} name={subredditName} key={subredditName} />
+      return <Subreddit icon={subredditIcon} name={subredditName} key={subredditName} changeSubreddit={this.props.changeSubreddit} />
     });
     return (
       <section className="sidebar">

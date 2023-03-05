@@ -1,4 +1,4 @@
-import React, { useEffect, useState, componentDidMount } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './App.scss';
 import Navbar from './components/Navbar';
@@ -9,9 +9,9 @@ export default function App() {
 
   const [posts, setPosts] = useState({});
   const [subreddits, setSubreddits] = useState({});
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState('');
+  const [subredditName, setSubredditName] = useState('popular')
 
-  let i = 0;
   useEffect(() => {
     const fetchPopularPosts = async () => {
       const url = `https://www.reddit.com/r/popular.json`;
@@ -40,7 +40,6 @@ export default function App() {
 
       return jsondata;
     }
-
 
     fetchPopularPosts().then((jsondata) => {
       // const popularSubreddits = jsondata.data.children.reduce((accumulator, post) => {
@@ -96,6 +95,11 @@ export default function App() {
   function updateSearchTerm(text) {
     setSearchTerm(text)
   }
+
+  function changeSubreddit(subreddit) {
+    setSubredditName(subreddit)
+  }
+
   // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
   // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
@@ -105,7 +109,7 @@ export default function App() {
 
       <div className="container__feed-sidebar">
         <Feed posts={posts} searchTerm={searchTerm} />
-        <Sidebar subreddits={subreddits} />
+        <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} />
       </div>
 
     </div>

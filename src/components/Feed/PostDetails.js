@@ -92,7 +92,6 @@ export default function PostDetails(props) {
     setMoreCommentIds([...moreCommentIds])
   }
 
-
   // to show the exact time of the post
   // const d = new Date();
   // d.setTime(createdData);

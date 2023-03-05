@@ -2,16 +2,19 @@ import React from 'react';
 
 import './Subreddit.css';
 
-class Subreddit extends React.Component {
+export default function Subreddit(props) {
 
-  render() {
-    return (
-      <button className='subreddit-button' type="button">
-        <img src={this.props.icon} alt="Text" className="subreddit-icon"/>
-        {this.props.name}
-      </button>
-    )
+  const {changeSubreddit} = props;
+
+  function handleSubredditClick(e) {
+    e.preventDefault()
+    changeSubreddit(props.name)
   }
-}
 
-export default Subreddit
+  return (
+    <button className='subreddit-button' type="button" onClick={handleSubredditClick} >
+      <img src={props.icon} alt="Text" className="subreddit-icon" />
+      {props.name}
+    </button>
+  )
+}
