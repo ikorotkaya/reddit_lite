@@ -1,8 +1,6 @@
 .subreddit {
   padding: 10px;
   margin-bottom: 20px;
-
-  border-radius: 5px;
 }
 
 .subreddit-icon {
@@ -22,8 +20,15 @@
   border: none;
 
   background-color: rgb(255, 255, 255);
-  
+
   font-weight: 600;
-  
+
   cursor: pointer;
+
+  &--active {
+    border-radius: 5px;
+
+    background-color: rgb(203, 229, 230);
+
+  }
 }

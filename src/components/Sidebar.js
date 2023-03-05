@@ -8,7 +8,7 @@ class Sidebar extends React.Component {
 
     const subreddits = Object.keys(this.props.subreddits).map((subredditName) => {
       const subredditIcon = this.props.subreddits[subredditName]
-      return <Subreddit icon={subredditIcon} name={subredditName} key={subredditName} changeSubreddit={this.props.changeSubreddit} />
+      return <Subreddit icon={subredditIcon} currentSubredditName={this.props.currentSubredditName} name={subredditName} key={subredditName} changeSubreddit={this.props.changeSubreddit} />
     });
     return (
       <section className="sidebar">

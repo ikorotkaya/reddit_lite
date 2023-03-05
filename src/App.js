@@ -124,7 +124,7 @@ export default function App() {
 
       <div className="container__feed-sidebar">
         <Feed posts={posts} searchTerm={searchTerm} />
-        <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} />
+        <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
       </div>
 
     </div>
