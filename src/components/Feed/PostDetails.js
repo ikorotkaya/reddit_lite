@@ -7,7 +7,8 @@ import CommentsFeed from './CommentsFeed'
 export default function PostDetails(props) {
   const [comments, setComments] = useState({});
   const [commentsVisible, setCommentsVisible] = useState(false);
-  const [moreCommentIds, setMoreCommentIds] = useState([])
+  const [moreCommentIds, setMoreCommentIds] = useState([]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false)
 
   const { postData } = props;
   const createdData = props.postData.created;
@@ -44,8 +45,9 @@ export default function PostDetails(props) {
       const moreComments = rawCommentsData.data.children.find(item => item.kind === 'more');
       const commentIds = moreComments.data.children;
       setMoreCommentIds(commentIds)
-    }, [])
 
+      setCommentsLoaded(!commentsLoaded)
+    }, [])
 
     // if (commentsVisible) {
     //   setCommentsVisible(false)
@@ -143,7 +145,7 @@ export default function PostDetails(props) {
         <PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
       </div>
       {commentsVisible && <div className='post-details__comments-feed'>
-        <CommentsFeed comments={comments} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments} />
+        <CommentsFeed comments={comments} commentsLoaded={commentsLoaded} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments} />
       </div>}
     </div>
   )

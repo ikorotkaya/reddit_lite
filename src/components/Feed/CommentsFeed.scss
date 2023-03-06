@@ -5,14 +5,19 @@
 
 .load-more {
   padding: 10px;
-  
+
   border: none;
   border-radius: 3px;
 
   background-color: rgb(187, 210, 191);
-  
+
   font-size: 0.75rem;
   text-transform: uppercase;
 
   cursor: pointer;
+}
+
+.spinner {
+  width: 60px;
+  align-self: center;
 }
