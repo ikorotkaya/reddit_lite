@@ -11,10 +11,19 @@ class CommentsFeed extends React.Component {
       return <Comment commentData={commentData} key={commentBody} />
     });
 
+    const isSpinnerVisible = () => {
+      return !this.props.commentsLoaded
+    }
+
+    const isLoadMoreButtonVisible = () => {
+      return this.props.commentsLoaded && this.props.moreCommentIds.length > 0
+    }
+    
     return (
       <div className='comments-feed_container'>
         {comments}
-        {this.props.commentsLoaded ? (this.props.moreCommentIds.length !==0 ? <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button> : null ) : <img src={require('./spinning_image.gif')} alt="spinner" className="spinner"></img>}
+        {isSpinnerVisible() && <img src={require('./spinning_image.gif')} alt="spinner" className="spinner"></img>}
+        {isLoadMoreButtonVisible() && <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button>}
       </div>
     )
   }
