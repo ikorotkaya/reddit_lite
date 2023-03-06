@@ -14,7 +14,7 @@ class CommentsFeed extends React.Component {
     return (
       <div className='comments-feed_container'>
         {comments}
-        {this.props.commentsLoaded ? <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button> : <img src={require('./spinning_image.gif')} alt="spinner" className="spinner"></img>}
+        {this.props.commentsLoaded ? (this.props.moreCommentIds.length !==0 ? <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button> : null ) : <img src={require('./spinning_image.gif')} alt="spinner" className="spinner"></img>}
       </div>
     )
   }

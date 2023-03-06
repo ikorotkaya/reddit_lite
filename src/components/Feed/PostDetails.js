@@ -43,8 +43,14 @@ export default function PostDetails(props) {
       setComments(postComments)
 
       const moreComments = rawCommentsData.data.children.find(item => item.kind === 'more');
-      const commentIds = moreComments.data.children;
-      setMoreCommentIds(commentIds)
+      console.log(moreComments)
+
+      const commentIds = moreComments?.data?.children;
+
+      if (commentIds) {
+        setMoreCommentIds(commentIds)
+
+      }
 
       setCommentsLoaded(!commentsLoaded)
     }, [])
