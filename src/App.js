@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import './App.scss';
 import Navbar from './components/Navbar';
@@ -10,9 +10,11 @@ export default function App() {
   const [posts, setPosts] = useState({});
   const [subreddits, setSubreddits] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [subredditName, setSubredditName] = useState('popular')
+  const [subredditName, setSubredditName] = useState('popular');
 
-  const fetchPosts = async (subredditName) => {
+  const initializedRef = useRef(false);
+
+  const fetchPosts = async (subredditName) => {    
     const url = `https://www.reddit.com/r/${subredditName}.json`;
 
     let requestOptions = {
@@ -37,6 +39,10 @@ export default function App() {
   }
 
   useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
+    console.log("1")
 
     const fetchSubreddit = async (name) => {
       const url = `https://www.reddit.com/r/${name}/about.json`;
@@ -99,11 +105,31 @@ export default function App() {
         feedPosts[post.data.id] = post.data
       });
       setPosts(feedPosts)
-    }, [])
-
+    }, [])    
   }, []);
-  
+
+  useEffect( () => {
+    const handleScroll = (event) => {
+      const windowHeight = window.innerHeight;
+      const bodyHeight = document.querySelector('body').scrollHeight;
+      const currentScrollHeight = window.scrollY;
+
+      if ((bodyHeight - currentScrollHeight) <= windowHeight) {
+        alert("Load more")
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      console.log('Hey')
+      window.removeEventListener('scroll', handleScroll);
+    };
+ }, []);
+
   useEffect(() => {
+    console.log("2")
+
     loadPosts(subredditName)
   }, [subredditName])
 
@@ -115,6 +141,10 @@ export default function App() {
     setSubredditName(subreddit)
   }
 
+
+
+
+
   // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
   // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
@@ -122,7 +152,7 @@ export default function App() {
     <div className='container'>
       <Navbar updateSearchTerm={updateSearchTerm} />
 
-      <div className="container__feed-sidebar">
+      <div className="container__feed-sidebar" >
         <Feed posts={posts} searchTerm={searchTerm} />
         <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
       </div>
