@@ -11,11 +11,19 @@ export default function App() {
   const [subreddits, setSubreddits] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [subredditName, setSubredditName] = useState('popular');
+  const [nextPageId, setNextPageId] = useState('')
 
   const initializedRef = useRef(false);
+  const loadingPosts = useRef(false)
 
   const fetchPosts = async (subredditName) => {    
-    const url = `https://www.reddit.com/r/${subredditName}.json`;
+    let url = ''
+    console.log(nextPageId)
+    if (nextPageId) {
+       url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
+    } else {
+      url = `https://www.reddit.com/r/${subredditName}.json`;
+    }
 
     let requestOptions = {
       method: 'GET',
@@ -29,20 +37,28 @@ export default function App() {
   }
 
   const loadPosts = (subredditName) => {
+    loadingPosts.current = true;
+
     fetchPosts(subredditName).then((jsondata) => {
       const feedPosts = {};
       jsondata.data.children.forEach(post => {
         feedPosts[post.data.id] = post.data
       });
-      setPosts(feedPosts)
+
+      const nextPage = jsondata.data.after
+      
+      console.log("--> setting nextPage: ", nextPage);
+
+      setNextPageId(nextPage);
+      setPosts({...posts, ...feedPosts});
+
+      loadingPosts.current = false;
     })
   }
 
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
-
-    console.log("1")
 
     const fetchSubreddit = async (name) => {
       const url = `https://www.reddit.com/r/${name}/about.json`;
@@ -104,32 +120,33 @@ export default function App() {
       jsondata.data.children.forEach(post => {
         feedPosts[post.data.id] = post.data
       });
+
       setPosts(feedPosts)
     }, [])    
   }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     const handleScroll = (event) => {
+      if (loadingPosts.current) return;
+      if (!nextPageId) return;
+
       const windowHeight = window.innerHeight;
       const bodyHeight = document.querySelector('body').scrollHeight;
       const currentScrollHeight = window.scrollY;
 
       if ((bodyHeight - currentScrollHeight) <= windowHeight) {
-        alert("Load more")
+        loadPosts(subredditName)
       }
     };
 
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      console.log('Hey')
       window.removeEventListener('scroll', handleScroll);
     };
- }, []);
+ }, [nextPageId]);
 
   useEffect(() => {
-    console.log("2")
-
     loadPosts(subredditName)
   }, [subredditName])
 
