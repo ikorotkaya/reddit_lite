@@ -15,6 +15,12 @@ html {
     grid-template-columns: 2fr 1fr;
     gap: 20px;
   }
+  
+  &__posts-spinner {
+    width: 60px;
+    // align-self: center;
+    grid-column: span 1;
+  }
 }
 
 

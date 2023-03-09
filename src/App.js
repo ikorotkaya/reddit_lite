@@ -12,15 +12,16 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [subredditName, setSubredditName] = useState('popular');
   const [nextPageId, setNextPageId] = useState('')
+  const [postsBeingLoaded, setPostsBeingLoaded] = useState(false)
 
   const initializedRef = useRef(false);
   const loadingPosts = useRef(false)
 
-  const fetchPosts = async (subredditName) => {    
+  const fetchPosts = async (subredditName) => {
     let url = ''
     console.log(nextPageId)
     if (nextPageId) {
-       url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
+      url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
     } else {
       url = `https://www.reddit.com/r/${subredditName}.json`;
     }
@@ -38,6 +39,7 @@ export default function App() {
 
   const loadPosts = (subredditName) => {
     loadingPosts.current = true;
+    setPostsBeingLoaded(true)
 
     fetchPosts(subredditName).then((jsondata) => {
       const feedPosts = {};
@@ -46,19 +48,23 @@ export default function App() {
       });
 
       const nextPage = jsondata.data.after
-      
+
       console.log("--> setting nextPage: ", nextPage);
 
       setNextPageId(nextPage);
-      setPosts({...posts, ...feedPosts});
+      setPosts({ ...posts, ...feedPosts });
 
       loadingPosts.current = false;
+
+      setPostsBeingLoaded(false)
     })
+
   }
 
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
+    setPostsBeingLoaded(true)
 
     const fetchSubreddit = async (name) => {
       const url = `https://www.reddit.com/r/${name}/about.json`;
@@ -122,7 +128,10 @@ export default function App() {
       });
 
       setPosts(feedPosts)
-    }, [])    
+
+      setPostsBeingLoaded(false)
+
+    }, [])
   }, []);
 
   useEffect(() => {
@@ -144,7 +153,7 @@ export default function App() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
- }, [nextPageId]);
+  }, [nextPageId]);
 
   useEffect(() => {
     loadPosts(subredditName)
@@ -158,7 +167,9 @@ export default function App() {
     setSubredditName(subreddit)
   }
 
-
+  const isSpinnerVisible = () => {
+    return postsBeingLoaded
+  }
 
 
 
@@ -169,8 +180,13 @@ export default function App() {
     <div className='container'>
       <Navbar updateSearchTerm={updateSearchTerm} />
 
+
       <div className="container__feed-sidebar" >
-        <Feed posts={posts} searchTerm={searchTerm} />
+        <div>
+          <Feed posts={posts} searchTerm={searchTerm} />
+          {isSpinnerVisible() && <img src={require('../src/components/Feed/spinning_image.gif')} alt="spinner" className="container__posts-spinner"></img>}
+
+        </div>
         <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
       </div>
 
