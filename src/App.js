@@ -4,6 +4,8 @@ import './App.scss';
 import Navbar from './components/Navbar';
 import Feed from './components/Feed';
 import Sidebar from './components/Sidebar';
+import PageLoader from './components/PageLoader'
+import FeedLoader from './components/Feed/FeedLoader'
 
 export default function App() {
 
@@ -11,8 +13,9 @@ export default function App() {
   const [subreddits, setSubreddits] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [subredditName, setSubredditName] = useState('popular');
-  const [nextPageId, setNextPageId] = useState('')
-  const [postsBeingLoaded, setPostsBeingLoaded] = useState(false)
+  const [nextPageId, setNextPageId] = useState('');
+  const [postsBeingLoaded, setPostsBeingLoaded] = useState(false);
+  const [pageLoader, setPageLoader] = useState(true);
 
   const initializedRef = useRef(false);
   const loadingPosts = useRef(false)
@@ -120,6 +123,7 @@ export default function App() {
         })
 
         setSubreddits(popularSubreddits)
+        setPageLoader(false)
       });
 
       const feedPosts = {};
@@ -130,9 +134,12 @@ export default function App() {
       setPosts(feedPosts)
 
       setPostsBeingLoaded(false)
-
     }, [])
   }, []);
+
+  // useEffect(() => {
+  //   setPageLoader(!!postsBeingLoaded)
+  // }, [postsBeingLoaded]);
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -177,19 +184,21 @@ export default function App() {
   // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
   return (
-    <div className='container'>
-      <Navbar updateSearchTerm={updateSearchTerm} />
+    <div>
+      {pageLoader && <PageLoader />}
 
+      <div className='container'>
+        <Navbar updateSearchTerm={updateSearchTerm} />
+        <div className="container__feed-sidebar" >
 
-      <div className="container__feed-sidebar" >
-        <div>
-          <Feed posts={posts} searchTerm={searchTerm} />
-          {isSpinnerVisible() && <img src={require('../src/components/Feed/spinning_image.gif')} alt="spinner" className="container__posts-spinner"></img>}
+          <div className='feed-sidebar__feed'>
+            <Feed posts={posts} searchTerm={searchTerm} />
+            {isSpinnerVisible() && <FeedLoader />}
+          </div>
 
+          <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
         </div>
-        <Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
       </div>
-
     </div>
   )
 }

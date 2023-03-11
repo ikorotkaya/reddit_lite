@@ -12,17 +12,17 @@ html {
 
   &__feed-sidebar {
     display: grid;
+    justify-content: center;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
+    
   }
-  
-  &__posts-spinner {
-    width: 60px;
-    // align-self: center;
-    grid-column: span 1;
-  }
+
 }
 
+.feed__spinner {
+  width: 60px;
+}
 
 @media screen and (max-width: 767px) {
   .container__feed-sidebar {
@@ -36,3 +36,6 @@ html {
     width: 1000px;
   }
 }
+
+
+

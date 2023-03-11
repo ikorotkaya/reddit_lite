@@ -1,0 +1,8 @@
+.feed-loader {
+  display: flex;
+  justify-content: center;
+
+  &__spinner {
+    width: 70px;
+  }
+}

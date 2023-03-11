@@ -2,6 +2,8 @@ import React from 'react';
 
 import './CommentsFeed.scss';
 import Comment from './Comment';
+import imageSrc from '../images/spinning_image.gif'
+
 
 class CommentsFeed extends React.Component {
 
@@ -22,7 +24,7 @@ class CommentsFeed extends React.Component {
     return (
       <div className='comments-feed_container'>
         {comments}
-        {isSpinnerVisible() && <img src={require('./spinning_image.gif')} alt="spinner" className="spinner"></img>}
+        {isSpinnerVisible() && <img src={imageSrc} alt="spinner" className="spinner"></img>}
         {isLoadMoreButtonVisible() && <button type='button' onClick={this.props.loadMoreComments} className="load-more">Load {this.props.moreCommentIds.length} more</button>}
       </div>
     )
