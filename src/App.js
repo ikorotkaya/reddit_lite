@@ -62,13 +62,12 @@ export default function App() {
     let newSubredditsNames = [];
 
     Object.values(posts).forEach(post => {
-      if (Object.keys(subreddits).includes(post.subreddit)) {
-        return
-      } else {
+      if(!subreddits[post.subreddit]) {
         newSubredditsNames.push(post.subreddit)
       }
     });
 
+    console.log(newSubredditsNames)
   }
 
   useEffect(() => {
