@@ -39,6 +39,52 @@ export default function App() {
     return jsondata;
   }
 
+  const fetchSubreddit = async (name) => {
+    const url = `https://www.reddit.com/r/${name}/about.json`;
+
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    const response = await fetch(url, requestOptions);
+    const jsondata = await response.json();
+
+    return jsondata;
+  }
+
+  const loadSubreddits = (newSubreddits) => {
+    const promises = newSubreddits.map(name => {
+      return fetchSubreddit(name);
+    })
+
+    Promise.all(promises).then((rawSubreddits) => {
+      const popularSubreddits = {};
+
+      rawSubreddits.forEach(rawSubreddit => {
+        let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
+        const removeUrlParams = (url) => {
+          if (!url) {
+            return url;
+          }
+
+          if (typeof (url) !== "string") {
+            throw new Error("Input should be a string.");
+          }
+
+          return url.split("?")[0];
+        }
+        let imageUrl = removeUrlParams(urlData)
+        popularSubreddits[rawSubreddit.data.display_name] = imageUrl
+      })
+
+      const allSubreddits = { ...subreddits, ...popularSubreddits };
+      setSubreddits(allSubreddits)
+
+      setPageLoader(false)
+    });
+  }
+
   const loadPosts = (subredditName) => {
     loadingPosts.current = true;
     setPostsBeingLoaded(true)
@@ -57,17 +103,17 @@ export default function App() {
       loadingPosts.current = false;
 
       setPostsBeingLoaded(false)
+
+      let newSubredditNames = [];
+      jsondata.data.children.forEach(post => {
+        if (!subreddits[post.data.subreddit]) {
+          newSubredditNames.push(post.data.subreddit)
+        }
+      });
+
+      loadSubreddits(newSubredditNames)
     })
 
-    let newSubredditsNames = [];
-
-    Object.values(posts).forEach(post => {
-      if(!subreddits[post.subreddit]) {
-        newSubredditsNames.push(post.subreddit)
-      }
-    });
-
-    console.log(newSubredditsNames)
   }
 
   useEffect(() => {
@@ -75,26 +121,7 @@ export default function App() {
     initializedRef.current = true;
     setPostsBeingLoaded(true)
 
-    const fetchSubreddit = async (name) => {
-      const url = `https://www.reddit.com/r/${name}/about.json`;
-
-      let requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-      };
-
-      const response = await fetch(url, requestOptions);
-      const jsondata = await response.json();
-
-      return jsondata;
-    }
-
     fetchPosts(subredditName).then((jsondata) => {
-      // const popularSubreddits = jsondata.data.children.reduce((accumulator, post) => {
-      //   accumulator[post.data.subreddit] = null;
-
-      //   return accumulator; 
-      // }, {});
 
       const popularSubreddits = {};
       jsondata.data.children.forEach(post => {
@@ -102,35 +129,8 @@ export default function App() {
       });
 
       const subredditNames = Object.keys(popularSubreddits);
-      // console.log(subredditNames)
 
-      const promises = subredditNames.map(name => {
-        return fetchSubreddit(name);
-      })
-
-      Promise.all(promises).then((rawSubreddits) => {
-        const popularSubreddits = {};
-
-        rawSubreddits.forEach(rawSubreddit => {
-          let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
-          const removeUrlParams = (url) => {
-            if (!url) {
-              return url;
-            }
-
-            if (typeof (url) !== "string") {
-              throw new Error("Input should be a string.");
-            }
-
-            return url.split("?")[0];
-          }
-          let imageUrl = removeUrlParams(urlData)
-          popularSubreddits[rawSubreddit.data.display_name] = imageUrl
-        })
-
-        setSubreddits(popularSubreddits)
-        setPageLoader(false)
-      });
+      loadSubreddits(subredditNames)
 
       const feedPosts = {};
       jsondata.data.children.forEach(post => {
@@ -142,10 +142,6 @@ export default function App() {
       setPostsBeingLoaded(false)
     }, [])
   }, []);
-
-  // useEffect(() => {
-  //   setPageLoader(!!postsBeingLoaded)
-  // }, [postsBeingLoaded]);
 
   useEffect(() => {
     const handleScroll = (event) => {

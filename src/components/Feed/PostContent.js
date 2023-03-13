@@ -31,7 +31,7 @@ export default function PostContent(props) {
 
   return (
     <div className="post-content">
-      <h2 className='post-content__title'>{postData.title}</h2>
+      <h2 className='post-content__title'>{postData.subreddit}: {postData.title}</h2>
       {chooseMediaType(postData)}
     </div>
   )
