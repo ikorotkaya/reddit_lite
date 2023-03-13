@@ -22,7 +22,6 @@ export default function App() {
 
   const fetchPosts = async (subredditName) => {
     let url = ''
-    console.log(nextPageId)
     if (nextPageId) {
       url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
     } else {
@@ -52,8 +51,6 @@ export default function App() {
 
       const nextPage = jsondata.data.after
 
-      console.log("--> setting nextPage: ", nextPage);
-
       setNextPageId(nextPage);
       setPosts({ ...posts, ...feedPosts });
 
@@ -61,6 +58,16 @@ export default function App() {
 
       setPostsBeingLoaded(false)
     })
+
+    let newSubredditsNames = [];
+
+    Object.values(posts).forEach(post => {
+      if (Object.keys(subreddits).includes(post.subreddit)) {
+        return
+      } else {
+        newSubredditsNames.push(post.subreddit)
+      }
+    });
 
   }
 
