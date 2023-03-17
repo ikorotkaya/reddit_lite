@@ -9,10 +9,8 @@ class Navbar extends React.Component {
   render() {
     return (
       <div className="container__navbar">
-
         <Logo />
-        <Search updateSearchTerm={this.props.updateSearchTerm}/>
-
+        <Search updateSearchTerm={this.props.updateSearchTerm} />
       </div >
     )
   }

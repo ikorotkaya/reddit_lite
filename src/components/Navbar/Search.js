@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import './Search.scss';
 
 export default function Search(props) {
-
   const [searchTerm, setSearchTerm] = useState('');
   const {updateSearchTerm} = props;
 
   function handleButtonClick(e) {
     e.preventDefault()
     updateSearchTerm(searchTerm);
-    
   }
 
   const handleInput = (e) => {

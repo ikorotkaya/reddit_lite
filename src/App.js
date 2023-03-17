@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 
-import './App.scss';
-import Navbar from './components/Navbar';
-import Feed from './components/Feed';
-import Sidebar from './components/Sidebar';
+import './App.scss'
+import Navbar from './components/Navbar'
+import Feed from './components/Feed'
+import Sidebar from './components/Sidebar'
 import PageLoader from './components/PageLoader'
 import FeedLoader from './components/Feed/FeedLoader'
+
+import fetchSubreddit from './modules/fetchSubreddit'
 
 export default function App() {
 
@@ -20,67 +22,34 @@ export default function App() {
   const initializedRef = useRef(false);
   const loadingPosts = useRef(false)
 
-  const fetchPosts = async (subredditName) => {
-    let url = ''
-    if (nextPageId) {
-      url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
-    } else {
-      url = `https://www.reddit.com/r/${subredditName}.json`;
-    }
-
-    let requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-
-    const response = await fetch(url, requestOptions);
-    const jsondata = await response.json();
-
-    return jsondata;
-  }
-
-  const fetchSubreddit = async (name) => {
-    const url = `https://www.reddit.com/r/${name}/about.json`;
-
-    let requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-
-    const response = await fetch(url, requestOptions);
-    const jsondata = await response.json();
-
-    return jsondata;
-  }
-
   const loadSubreddits = (newSubreddits) => {
     const promises = newSubreddits.map(name => {
       return fetchSubreddit(name);
     })
-
+  
     Promise.all(promises).then((rawSubreddits) => {
       const popularSubreddits = {};
-
+  
       rawSubreddits.forEach(rawSubreddit => {
         let urlData = rawSubreddit.data.community_icon || rawSubreddit.data.icon_img
         const removeUrlParams = (url) => {
           if (!url) {
             return url;
           }
-
+  
           if (typeof (url) !== "string") {
             throw new Error("Input should be a string.");
           }
-
+  
           return url.split("?")[0];
         }
         let imageUrl = removeUrlParams(urlData)
         popularSubreddits[rawSubreddit.data.display_name] = imageUrl
       })
-
+  
       const allSubreddits = { ...subreddits, ...popularSubreddits };
       setSubreddits(allSubreddits)
-
+  
       setPageLoader(false)
     });
   }
@@ -88,32 +57,51 @@ export default function App() {
   const loadPosts = (subredditName) => {
     loadingPosts.current = true;
     setPostsBeingLoaded(true)
-
+  
     fetchPosts(subredditName).then((jsondata) => {
       const feedPosts = {};
       jsondata.data.children.forEach(post => {
         feedPosts[post.data.id] = post.data
       });
-
+  
       const nextPage = jsondata.data.after
-
+  
       setNextPageId(nextPage);
       setPosts({ ...posts, ...feedPosts });
-
+  
       loadingPosts.current = false;
-
+  
       setPostsBeingLoaded(false)
-
+  
       let newSubredditNames = [];
       jsondata.data.children.forEach(post => {
         if (!subreddits[post.data.subreddit]) {
           newSubredditNames.push(post.data.subreddit)
         }
       });
-
+  
       loadSubreddits(newSubredditNames)
     })
+  
+  }
 
+  const fetchPosts = async (subredditName) => {
+    let url = ''
+    if (nextPageId) {
+      url = `https://www.reddit.com/r/${subredditName}.json?after=${nextPageId}`;
+    } else {
+      url = `https://www.reddit.com/r/${subredditName}.json`;
+    }
+  
+    let requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+  
+    const response = await fetch(url, requestOptions);
+    const jsondata = await response.json();
+  
+    return jsondata;
   }
 
   useEffect(() => {
@@ -159,10 +147,14 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll);
 
+    // https://codingbeautydev.com/blog/react-scroll-event/
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [nextPageId]);
+
+  // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
   useEffect(() => {
     loadPosts(subredditName)
@@ -180,10 +172,7 @@ export default function App() {
     return postsBeingLoaded
   }
 
-
-
   // https://medium.com/@t93/states-and-componentdidmount-in-functional-components-with-hooks-cac5484d22ad
-  // Double render: https://stackoverflow.com/questions/60618844/react-hooks-useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-ar
 
   return (
     <div>

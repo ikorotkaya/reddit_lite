@@ -4,6 +4,8 @@ import './PostDetails.scss';
 import PostDetailsComments from './PostDetailsComments'
 import CommentsFeed from './CommentsFeed'
 
+import timeDifference from '../../modules/timeDifference';
+
 export default function PostDetails(props) {
   const [comments, setComments] = useState({});
   const [commentsVisible, setCommentsVisible] = useState(false);
@@ -86,7 +88,7 @@ export default function PostDetails(props) {
     Promise.all(newCommentsPromises).then(rawComments => {
       const postNewComments = {};
 
-      rawComments.map(rawCommentData => {
+      rawComments.forEach(rawCommentData => {
         const newComment = rawCommentData[1];
         newComment.data.children.forEach((comment) => {
           postNewComments[comment.data.body] = comment.data
@@ -97,46 +99,6 @@ export default function PostDetails(props) {
     })
 
     setMoreCommentIds([...moreCommentIds])
-  }
-
-  // to show the exact time of the post
-  // const d = new Date();
-  // d.setTime(createdData);
-  // const time = d.toString().slice(16, 24);
-
-  function timeDifference(current, previous) {
-
-    var secPerMinute = 60;
-    var secPerHour = secPerMinute * 60;
-    var secPerDay = secPerHour * 24;
-    var secPerMonth = secPerDay * 30;
-    var secPerYear = secPerDay * 365;
-
-    var postTime = Math.abs(current - previous);
-
-    if (postTime < secPerMinute) {
-      return Math.round(postTime / 1000) + ' seconds ago';
-    }
-
-    else if (postTime < secPerHour) {
-      return Math.round(postTime / secPerMinute) + ' minutes ago';
-    }
-
-    else if (postTime < secPerDay) {
-      return Math.round(postTime / secPerHour) + ' hours ago';
-    }
-
-    else if (postTime < secPerMonth) {
-      return 'approximately ' + Math.round(postTime / secPerDay) + ' days ago';
-    }
-
-    else if (postTime < secPerYear) {
-      return 'approximately ' + Math.round(postTime / secPerMonth) + ' months ago';
-    }
-
-    else {
-      return 'approximately ' + Math.round(postTime / secPerYear) + ' years ago';
-    }
   }
 
   const currentSeconds = Date.now() / 1000;
