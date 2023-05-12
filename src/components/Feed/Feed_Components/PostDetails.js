@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './PostDetails.scss';
 import PostDetailsComments from './PostDetailsComments';
@@ -13,9 +14,8 @@ export default function PostDetails(props) {
 	const [commentsLoaded, setCommentsLoaded] = useState(false);
 
 	const { postData } = props;
-	const createdData = props.postData.created;
-	const permalinkData = props.postData.permalink;
-
+	const createdData = postData.created;
+	const permalinkData = postData.permalink;
 
 	const toggleComments = () => {
 		setCommentsVisible(!commentsVisible);
@@ -38,19 +38,22 @@ export default function PostDetails(props) {
 
 			const postComments = {};
 
-			rawCommentsData.data.children.filter(item => item.kind !== 'more').forEach((comment) => {
-				postComments[comment.data.body] = comment.data;
-			});
+			rawCommentsData.data.children
+				.filter((item) => item.kind !== 'more')
+				.forEach((comment) => {
+					postComments[comment.data.body] = comment.data;
+				});
 			// console.log(postComments)
 			setComments(postComments);
 
-			const moreComments = rawCommentsData.data.children.find(item => item.kind === 'more');
+			const moreComments = rawCommentsData.data.children.find(
+				(item) => item.kind === 'more'
+			);
 
 			const commentIds = moreComments?.data?.children;
 
 			if (commentIds) {
 				setMoreCommentIds(commentIds);
-
 			}
 
 			setCommentsLoaded(!commentsLoaded);
@@ -62,7 +65,6 @@ export default function PostDetails(props) {
 		//   setCommentsVisible(true)
 		// }
 	};
-
 
 	const loadMoreComments = () => {
 		const tenMoreIds = moreCommentIds.splice(0, 10);
@@ -81,14 +83,14 @@ export default function PostDetails(props) {
 			return jsondata;
 		};
 
-		const newCommentsPromises = tenMoreIds.map(id => {
+		const newCommentsPromises = tenMoreIds.map((id) => {
 			return fetchComment(id);
 		});
 
-		Promise.all(newCommentsPromises).then(rawComments => {
+		Promise.all(newCommentsPromises).then((rawComments) => {
 			const postNewComments = {};
 
-			rawComments.forEach(rawCommentData => {
+			rawComments.forEach((rawCommentData) => {
 				const newComment = rawCommentData[1];
 				newComment.data.children.forEach((comment) => {
 					postNewComments[comment.data.body] = comment.data;
@@ -106,15 +108,30 @@ export default function PostDetails(props) {
 
 	return (
 		<div className="post-details">
-			<div className='post-details__details'>
-				<div className='post-details__username'>{postData.author}</div>
-				<div className='post-details__time'>{timestamp}</div>
-				<PostDetailsComments postData={postData} onClick={toggleComments} toggleComments={toggleComments} />
+			<div className="post-details__details">
+				<div className="post-details__username">{postData.author}</div>
+				<div className="post-details__time">{timestamp}</div>
+				<PostDetailsComments
+					postData={postData}
+					onClick={toggleComments}
+					toggleComments={toggleComments}
+				/>
 			</div>
-			{commentsVisible && <div className='post-details__comments-feed'>
-				<CommentsFeed comments={comments} commentsLoaded={commentsLoaded} onClick={loadMoreComments} moreCommentIds={moreCommentIds} loadMoreComments={loadMoreComments} />
-			</div>}
+			{commentsVisible && (
+				<div className="post-details__comments-feed">
+					<CommentsFeed
+						comments={comments}
+						commentsLoaded={commentsLoaded}
+						onClick={loadMoreComments}
+						moreCommentIds={moreCommentIds}
+						loadMoreComments={loadMoreComments}
+					/>
+				</div>
+			)}
 		</div>
 	);
 }
 
+PostDetails.propTypes = {
+	postData: PropTypes.string.isRequired,
+};

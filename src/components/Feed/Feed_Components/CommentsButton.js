@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 import './CommentsButton.scss';
 
@@ -14,3 +16,7 @@ export default function Post(props) {
 		</button>
 	);
 }
+
+Post.propTypes = {
+	toggleComments: PropTypes.string.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Comment.scss';
 import timeDifference from '../../../modules/timeDifference';
@@ -22,3 +23,7 @@ class Comment extends React.Component {
 }
 
 export default Comment;
+
+Comment.propTypes = {
+	commentData: PropTypes.string.isRequired
+};

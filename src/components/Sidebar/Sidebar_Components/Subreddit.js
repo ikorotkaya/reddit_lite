@@ -1,18 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+// Typechecking With PropTypes https://legacy.reactjs.org/docs/typechecking-with-proptypes.html
 
 import './Subreddit.scss';
 
 export default function Subreddit(props) {
-
-	const {changeSubreddit, currentSubredditName} = props;
-
 	function handleSubredditClick(e) {
 		e.preventDefault();
-		changeSubreddit(props.name);
+		props.changeSubreddit(props.name);
 	}
 
 	function cssClassName() {
-		if (currentSubredditName === props.name) {
+		if (props.currentSubredditName === props.name) {
 			return 'subreddit-button subreddit-button--active'; 
 		} else {
 			return 'subreddit-button';
@@ -26,3 +25,10 @@ export default function Subreddit(props) {
 		</button>
 	);
 }
+
+Subreddit.propTypes = {
+	icon: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	changeSubreddit: PropTypes.string.isRequired,
+	currentSubredditName: PropTypes.string.isRequired
+};
