@@ -1,7 +1,7 @@
 import React from "react";
 import './FeedLoader.scss'
 
-import imageSrc from '../images/spinning_image.gif'
+import imageSrc from '../../images/spinning_image.gif'
 
 
 class FeedLoader extends React.Component {

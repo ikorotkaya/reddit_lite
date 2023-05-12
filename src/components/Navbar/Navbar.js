@@ -1,8 +1,8 @@
 import React from 'react';
 
 import './Navbar.css';
-import Logo from './Navbar/Logo';
-import Search from './Navbar/Search'
+import Logo from './Navbar_Components/Logo';
+import Search from './Navbar_Components/Search'
 
 class Navbar extends React.Component {
 

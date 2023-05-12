@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Sidebar.scss';
-import Subreddit from './Sidebar/Subreddit';
+import Subreddit from './Sidebar_Components/Subreddit';
 
 class Sidebar extends React.Component {
   render() {

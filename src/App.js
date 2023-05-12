@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 
 import './App.scss'
-import Navbar from './components/Navbar'
-import Feed from './components/Feed'
-import Sidebar from './components/Sidebar'
-import PageLoader from './components/PageLoader'
-import FeedLoader from './components/Feed/FeedLoader'
+import Navbar from './components/Navbar/Navbar'
+import Feed from './components/Feed/Feed'
+import Sidebar from './components/Sidebar/Sidebar'
+import PageLoader from '../src/components/PageLoader'
+import FeedLoader from './components/Feed/Feed_Components/FeedLoader'
 
 import fetchSubreddit from './modules/fetchSubreddit'
 
+// give components better names
 export default function App() {
 
   const [posts, setPosts] = useState({});

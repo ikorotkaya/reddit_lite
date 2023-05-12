@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Comment.scss';
-import timeDifference from '../../modules/timeDifference'
+import timeDifference from '../../../modules/timeDifference'
 
 class Comment extends React.Component {
   render() {

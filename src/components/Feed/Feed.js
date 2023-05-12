@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Feed.scss';
-import Post from './Feed/Post';
+import Post from '../Feed/Feed_Components/Post';
 
 class Feed extends React.Component {
   render() {

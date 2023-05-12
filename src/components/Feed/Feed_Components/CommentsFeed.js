@@ -2,7 +2,7 @@ import React from 'react';
 
 import './CommentsFeed.scss';
 import Comment from './Comment';
-import imageSrc from '../images/spinning_image.gif'
+import imageSrc from '../../images/spinning_image.gif'
 
 
 class CommentsFeed extends React.Component {

@@ -4,7 +4,7 @@ import './PostDetails.scss';
 import PostDetailsComments from './PostDetailsComments'
 import CommentsFeed from './CommentsFeed'
 
-import timeDifference from '../../modules/timeDifference';
+import timeDifference from '../../../modules/timeDifference';
 
 export default function PostDetails(props) {
   const [comments, setComments] = useState({});
