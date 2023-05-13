@@ -8,7 +8,7 @@ import Search from './Navbar_Components/Search';
 class Navbar extends React.Component {
 	render() {
 		return (
-			<div className="container__navbar">
+			<div className="container__navbar" data-testid="navbar">
 				<Logo />
 				<Search updateSearchTerm={this.props.updateSearchTerm} />
 			</div>

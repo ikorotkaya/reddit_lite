@@ -101,6 +101,8 @@ export default function App() {
   
 		const response = await fetch(url, requestOptions);
 		const jsondata = await response.json();
+
+		console.log('--> jsondata: ', jsondata);
   
 		return jsondata;
 	};

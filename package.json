@@ -41,6 +41,8 @@
   "devDependencies": {
     "eslint": "^8.40.0",
     "eslint-plugin-react": "^7.32.2",
+    "jest": "^27.5.1",
+    "msw": "^1.2.1",
     "prettier-eslint": "^15.0.1"
   }
 }

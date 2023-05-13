@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // Typechecking With PropTypes https://legacy.reactjs.org/docs/typechecking-with-proptypes.html
+// https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
 
 import './Subreddit.scss';
 
