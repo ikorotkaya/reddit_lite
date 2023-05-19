@@ -19,5 +19,5 @@ class Navbar extends React.Component {
 export default Navbar;
 
 Navbar.propTypes = {
-	updateSearchTerm: PropTypes.string.isRequired,
+	updateSearchTerm: PropTypes.func.isRequired,
 };

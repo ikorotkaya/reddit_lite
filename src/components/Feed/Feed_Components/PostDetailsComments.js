@@ -16,6 +16,6 @@ export default function PostDetailsComments(props) {
 }
 
 PostDetailsComments.propTypes = {
-	postData: PropTypes.string.isRequired,
-	toggleComments: PropTypes.string.isRequired,
+	postData: PropTypes.object.isRequired,
+	toggleComments: PropTypes.func.isRequired,
 };

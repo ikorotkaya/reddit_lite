@@ -31,8 +31,8 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-	subreddits: PropTypes.string.isRequired,
-	changeSubreddit: PropTypes.string.isRequired,
+	subreddits: PropTypes.object.isRequired,
+	changeSubreddit: PropTypes.func.isRequired,
 	currentSubredditName: PropTypes.string.isRequired,
 };
 

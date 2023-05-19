@@ -44,5 +44,8 @@
     "jest": "^27.5.1",
     "msw": "^1.2.1",
     "prettier-eslint": "^15.0.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

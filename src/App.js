@@ -102,7 +102,7 @@ export default function App() {
 		const response = await fetch(url, requestOptions);
 		const jsondata = await response.json();
 
-		console.log('--> jsondata: ', jsondata);
+		// console.log('--> jsondata: ', jsondata);
   
 		return jsondata;
 	};
@@ -182,15 +182,15 @@ export default function App() {
 			{pageLoader && <PageLoader />}
 
 			<div className='container'>
-				<Navbar updateSearchTerm={updateSearchTerm} />
+				<Navbar updateSearchTerm={updateSearchTerm} role="navbar"/>
 				<div className="container__feed-sidebar" >
 
 					<div className='feed-sidebar__feed'>
-						<Feed posts={posts} searchTerm={searchTerm} />
+						<Feed posts={posts} searchTerm={searchTerm} role="feed"/>
 						{isSpinnerVisible() && <FeedLoader />}
 					</div>
 
-					<Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} />
+					<Sidebar subreddits={subreddits} changeSubreddit={changeSubreddit} currentSubredditName={subredditName} className="sidebar"/>
 				</div>
 			</div>
 		</div>

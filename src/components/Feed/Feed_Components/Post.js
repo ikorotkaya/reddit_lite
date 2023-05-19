@@ -26,5 +26,5 @@ class Post extends React.Component {
 export default Post;
 
 Post.propTypes = {
-	postData: PropTypes.string.isRequired,
+	postData: PropTypes.object.isRequired,
 };

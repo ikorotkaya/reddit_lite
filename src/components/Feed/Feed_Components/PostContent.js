@@ -51,5 +51,5 @@ export default function PostContent(props) {
 }
 
 PostContent.propTypes = {
-	postData: PropTypes.string.isRequired,
+	postData: PropTypes.object.isRequired,
 };

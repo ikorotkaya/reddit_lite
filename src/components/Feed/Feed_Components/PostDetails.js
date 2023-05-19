@@ -133,5 +133,5 @@ export default function PostDetails(props) {
 }
 
 PostDetails.propTypes = {
-	postData: PropTypes.string.isRequired,
+	postData: PropTypes.object.isRequired,
 };

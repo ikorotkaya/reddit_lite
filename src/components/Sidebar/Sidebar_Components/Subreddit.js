@@ -30,6 +30,6 @@ export default function Subreddit(props) {
 Subreddit.propTypes = {
 	icon: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	changeSubreddit: PropTypes.string.isRequired,
+	changeSubreddit: PropTypes.func.isRequired,
 	currentSubredditName: PropTypes.string.isRequired
 };

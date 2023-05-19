@@ -18,5 +18,5 @@ export default function Post(props) {
 }
 
 Post.propTypes = {
-	toggleComments: PropTypes.string.isRequired,
+	toggleComments: PropTypes.func.isRequired,
 };

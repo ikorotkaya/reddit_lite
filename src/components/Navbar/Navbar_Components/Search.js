@@ -50,5 +50,5 @@ export default function Search(props) {
 }
 
 Search.propTypes = {
-	updateSearchTerm: PropTypes.string.isRequired,
+	updateSearchTerm: PropTypes.func.isRequired,
 };
