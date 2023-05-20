@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import App from './App';
+import App from '../App';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import PopularSubredditResponse from './subreddit.popular.json';
-import AboutFooSubredditResponse from './subreddit.foo.about.json';
-import AboutBarSubredditResponse from './subreddit.bar.about.json';
+import PopularSubredditResponse from '../subreddit.popular.json';
+import AboutFooSubredditResponse from '../subreddit.foo.about.json';
+import AboutBarSubredditResponse from '../subreddit.bar.about.json';
 
 export const handlers = [
 	// Handles a get /popular request
-	rest.get('https://www.reddit.com/r/popular.json', (req, res, ctx) =>{
+	rest.get('https://www.reddit.com/r/popular.json', (req, res, ctx) => {
 		console.log('req1: ', req);
 		return res(ctx.json(PopularSubredditResponse));
 	}),
@@ -23,10 +23,10 @@ export const handlers = [
 	}),
 
 	// Handles a GET subreddit bar request
-	rest.get('https://www.reddit.com/r/bar/about.json', (req, res, ctx) =>{
+	rest.get('https://www.reddit.com/r/bar/about.json', (req, res, ctx) => {
 		console.log('req3: ', req);
 		return res(ctx.json(AboutBarSubredditResponse));
-	})
+	}),
 ];
 
 const redditApiServer = setupServer(...handlers);
@@ -34,7 +34,6 @@ const redditApiServer = setupServer(...handlers);
 describe('App', () => {
 	// Enable request interception.
 	beforeAll(() => redditApiServer.listen());
-
 	// Reset handlers so that each test could alter them
 	// without affecting other, unrelated tests.
 	afterEach(() => redditApiServer.resetHandlers());
@@ -46,17 +45,9 @@ describe('App', () => {
 		render(<App />);
 
 		await waitFor(() => {
-			expect(
-				screen.getByText('foo')
-			).toBeInTheDocument();
+			expect(screen.getByText('foo')).toBeInTheDocument();
 		});
 
-		// setTimeout(() => {
 		screen.debug(undefined, null, { highlight: false });
-		// }, 5000);
-
-		// const navbarElement = screen.getByTestId('navbar');
-		// const logoElement = navbarElement.getByTestId('logo');
-		// expect(logoElement).toBeInTheDocument();
 	});
 });

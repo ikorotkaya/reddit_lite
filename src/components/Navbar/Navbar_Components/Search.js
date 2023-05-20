@@ -17,9 +17,10 @@ export default function Search(props) {
 	};
 
 	return (
-		<form className="form">
+		<form className="form" data-testid="search">
 			<input
 				type="search"
+				data-testid="search-input"
 				id="query"
 				className="form__search-term"
 				name="q"
@@ -30,6 +31,7 @@ export default function Search(props) {
 			<button className="form__search-button" onClick={handleButtonClick}>
 				<svg
 					stroke="currentColor"
+					data-testid="search-button"
 					fill="none"
 					strokeWidth="0"
 					viewBox="0 0 24 24"
@@ -50,5 +52,5 @@ export default function Search(props) {
 }
 
 Search.propTypes = {
-	updateSearchTerm: PropTypes.func.isRequired,
+	updateSearchTerm: PropTypes.func,
 };
